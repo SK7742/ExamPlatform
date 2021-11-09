@@ -43,7 +43,7 @@ class RegisterNewCandidateComponent extends Component {
             console.log('candidateInsertQuery => ' + JSON.stringify(candidate));
             CandidateRegistrationService.registerNewCandidate(candidate).then(res => {
                 alert("User Registered SucessFully\nRedirecting to login Page")
-                this.props.history.push('/..');
+                this.props.history.push('/login');
             });
           }
 

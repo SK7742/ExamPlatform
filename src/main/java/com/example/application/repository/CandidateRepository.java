@@ -1,7 +1,4 @@
 package com.example.application.repository;
-
-import java.util.List;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -13,5 +10,5 @@ import com.example.application.model.Candidate;
 @Configuration
 @EnableJpaRepositories
 public interface CandidateRepository extends JpaRepository<Candidate, Long>{
-	List<Candidate> findUserByCandidateUserNameAndCandidatePassword(String candidateUserName, String candidatePassword);
+	Candidate findByCandidateUserNameAndCandidatePassword(String candidateUserName, String candidatePassword);
 }
