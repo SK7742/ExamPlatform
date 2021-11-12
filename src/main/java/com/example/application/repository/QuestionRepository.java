@@ -15,16 +15,6 @@ import com.example.application.model.Question;
 @EnableJpaRepositories
 public interface QuestionRepository extends JpaRepository<Question, Long>{
 	List<Question> findByQuestion(String question);
-	
-	long count();
-	//long QuestionId(Long question_id);
-	/*
-	@Query(value = constants.QuestionConstants.QUERY_MIN_COUNT_QUESTION_MODULE)
-	int MinQuestionFromModule(String module);
-	
-	@Query(value = constants.QuestionConstants.QUERY_MAX_COUNT_QUESTION_MODULE)
-	int MaxQuestionFromModule(String module);
-	
-	@Query(value = constants.QuestionConstants.QUERY_GET_QUESTION_BY_ID)
-	Question findByQuestionId(Long questionId);*/
+	@Query(value = "SELECT questionId FROM WHERE questionId=?1")
+	int findByQuestionId(int id);
 }

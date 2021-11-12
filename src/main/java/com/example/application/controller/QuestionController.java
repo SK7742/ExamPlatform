@@ -26,7 +26,6 @@ import com.example.application.repository.QuestionRepository;
 public class QuestionController {
 	@Autowired
 	QuestionRepository questionRepository;
-	
 	@PostMapping("/addQuestion")
 	public ResponseEntity<String> addNewQuestion(@RequestBody Question question) {
 		HttpHeaders responseHeaders = new HttpHeaders();
