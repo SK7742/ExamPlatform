@@ -11,4 +11,6 @@ import com.example.application.model.Candidate;
 @EnableJpaRepositories
 public interface CandidateRepository extends JpaRepository<Candidate, Long>{
 	Candidate findByCandidateUserNameAndCandidatePassword(String candidateUserName, String candidatePassword);
+
+	Candidate findByCandidateUserName(String userId);
 }
