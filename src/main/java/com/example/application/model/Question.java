@@ -35,15 +35,16 @@ public class Question {
 	
 	@Column(name="module", nullable=false, length=10)
 	private String module;
+	
+	@Column(name="answer", nullable=false, length=1)
+	private char answer;
 
 	public Question() {
 		super();
 	}
 
-	
-
 	public Question(String question, String optionA, String optionB, String optionC, String optionD,
-			char isQuestionActive, String module) {
+			char isQuestionActive, String module, char answer) {
 		super();
 		this.question = question;
 		this.optionA = optionA;
@@ -52,9 +53,8 @@ public class Question {
 		this.optionD = optionD;
 		this.isQuestionActive = isQuestionActive;
 		this.module = module;
+		this.answer = answer;
 	}
-
-
 
 	public Long getQuestionId() {
 		return questionId;
@@ -120,4 +120,12 @@ public class Question {
 		this.module = module;
 	}
 
+	public char getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(char answer) {
+		this.answer = answer;
+	}
+	
 }

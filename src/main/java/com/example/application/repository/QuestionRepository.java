@@ -15,6 +15,4 @@ import com.example.application.model.Question;
 @EnableJpaRepositories
 public interface QuestionRepository extends JpaRepository<Question, Long>{
 	List<Question> findByQuestion(String question);
-	@Query(value = "SELECT questionId FROM WHERE questionId=?1")
-	int findByQuestionId(int id);
 }

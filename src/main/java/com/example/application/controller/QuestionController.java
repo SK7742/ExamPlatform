@@ -33,6 +33,7 @@ public class QuestionController {
 			boolean isExistingQuestion;
 			isExistingQuestion = isQuestionAlreadyExisting(question);
 			if(!isExistingQuestion) {
+				question.setIsQuestionActive('Y');
 				questionRepository.save(question);
 				responseHeaders.set("Request Status:", "Question Saved");
 				return new ResponseEntity<String>("Question Saved!", responseHeaders, HttpStatus.ACCEPTED);
@@ -56,7 +57,9 @@ public class QuestionController {
 				if(question.getOptionA().equals(temp.getOptionA())
 						&& question.getOptionB().equals(temp.getOptionB())
 						&& question.getOptionC().equals(temp.getOptionC())
-						&& question.getOptionD().equals(temp.getOptionD()))
+						&& question.getOptionD().equals(temp.getOptionD())
+						&& question.getAnswer()==temp.getAnswer()
+						)
 					return true;
 			}
 
