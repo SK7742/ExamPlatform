@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.application.exception.ResourceNotFoundException;
 import com.example.application.model.Question;
 import com.example.application.repository.QuestionRepository;
+
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -66,8 +67,26 @@ public class QuestionController {
 		}
 		return false;
 	}
-
 	
-	
+	@PutMapping("/updateQuestion/{id}")
+	public ResponseEntity<Question> updateQuestionByQuestionId(@PathVariable Long id, @RequestBody Question questionFromScreen){
+		Question question = questionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Question Not Exist!"));
+		question.setIsQuestionActive(questionFromScreen.getIsQuestionActive());
+		question.setQuestion(questionFromScreen.getQuestion());
+		question.setAnswer(questionFromScreen.getAnswer());
+		question.setModule(questionFromScreen.getModule());
+		question.setOptionA(questionFromScreen.getOptionA());
+		question.setOptionB(questionFromScreen.getOptionB());
+		question.setOptionC(questionFromScreen.getOptionC());
+		question.setOptionD(questionFromScreen.getOptionD());
+		Question updatedQuestion = questionRepository.save(question);
+		return ResponseEntity.ok(updatedQuestion);
+		
+		
+	}
+	@GetMapping("/getAllQuestions")
+	public List<Question> getAllQuestionList(){
+		return questionRepository.findAll();
+	}
 	
 }

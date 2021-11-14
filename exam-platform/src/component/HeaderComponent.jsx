@@ -21,6 +21,7 @@ class HeaderComponent extends Component {
                             <div class="float-right">
                                 <div class="navbar-nav" >
                                 <a class="nav-item nav-link" href="/user/type/admin/addQuestion">Add Question</a>
+                                <a class="nav-item nav-link" href="/user/type/admin/showAllQuestion">View Questions</a>
                                 <a class="nav-item nav-link" href="#">Contact</a>
                                 
                             </div>
@@ -58,7 +59,7 @@ class HeaderComponent extends Component {
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="float-right">
                                 <div class="navbar-nav" >
-                                <a class="nav-item nav-link" href="http://localhost:3000/candidateRegister">SignUp</a><a class="nav-item nav-link" href="http://localhost:3000/login">Login</a>
+                                <a class="nav-item nav-link" href="http://localhost:3000/candidateRegister">SignUp</a>
                                 <a class="nav-item nav-link" href="http://localhost:3000/login">Login</a>
                                 <a class="nav-item nav-link" href="#">Contact</a>
                             </div>
