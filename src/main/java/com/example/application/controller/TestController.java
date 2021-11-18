@@ -1,5 +1,10 @@
 package com.example.application.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,47 +30,61 @@ public class TestController {
 	
 	@Autowired
 	CandidateRepository candidateRepository;
-	public Question generateQuestionId(Question question, TestResponse response) {
-		//int getMinQuestionId = questionRepository.MinQuestionFromModule(question.getModule());
-		//int getMaxQuestionId = questionRepository.MaxQuestionFromModule(question.getModule());
-		Random random = new Random();
-		int generatedQuetionId = 1;//random.nextInt(getMaxQuestionId-getMinQuestionId) + getMinQuestionId;
-		boolean isQuestionValid = validateGeneratedQuestionId(generatedQuetionId, question);
-		if(!isQuestionValid) {
-			generateQuestionId(question, response);
-		}
-		
-		if(response.getResponse().get(generatedQuetionId) != null) {
-			return question;
-		}
-		return generateQuestionId(question, response);
-	}
 	
-	private boolean validateGeneratedQuestionId(int generatedQuetionId, Question question) {
-		Question TempQuestion = new Question();
-		TempQuestion.setQuestionId((long) generatedQuetionId);
-		//TempQuestion =  questionRepository.findByQuestionId(question.getQuestionId());
-			if(TempQuestion.getModule().equals(question.getModule())) {
-				
-				return true;
+	@Autowired
+	QuestionController questionController;
+	
+	
+	@GetMapping("start/module/aptitude")
+	public List<Question> getQuestionsForAptitudeModule(){
+		/*Random random = new Random();
+		List<Question> questionListAptitudeModule = new ArrayList<Question>();
+		questionListAptitudeModule = questionRepository.findByModule(QuestionModules.APTITUDE.toString());
+		HashMap<Integer, Question> selectedQuestionsForAptitudeModule = new HashMap<>();
+		List<Question> selectedQuestionsToBeReturned = new ArrayList<Question>();
+		int aptitudeQuestionCounter = 0;
+		int aptitudeQuestionMaxCounter = questionListAptitudeModule.size();
+		if(questionListAptitudeModule.size() < 2) {
+			while(aptitudeQuestionCounter != 2 ) {
+				int randomGen = random.nextInt(aptitudeQuestionMaxCounter);
+				if(!selectedQuestionsForAptitudeModule.containsKey(randomGen)){
+					selectedQuestionsForAptitudeModule.put(randomGen, questionListAptitudeModule.get(randomGen));
+				}
 			}
-			return false;
-	}
-	
-	@GetMapping("starts/{userId}")
-	private void testStarts(@PathVariable String userId) {
-		TestResponse response = new TestResponse();
-		Candidate candidate = null;
-		candidate = candidateRepository.findByCandidateUserName(userId);
-		if(candidate != null)
-			response.setCandidate(candidate);
-			
-		//10 Questions for Aptitude
-		for(int i = 0; i<10; i++) {
-			Question question = new Question();
-			question.setModule(QuestionModules.APTITUDE.toString());
-			question = generateQuestionId(question, response);
-			
 		}
+		selectedQuestionsForAptitudeModule.forEach((Integer, Question) ->{
+			selectedQuestionsToBeReturned.add(Question);
+		});*/
+		List<Question> selectedQuestionsForAptitudeModule = null;
+		selectedQuestionsForAptitudeModule = getQuestionsForModuleByModuleName(QuestionModules.APTITUDE.toString());
+		if(selectedQuestionsForAptitudeModule != null) {
+			return selectedQuestionsForAptitudeModule;
+		}
+		return null;
+	}
+	public List<Question> getQuestionsForModuleByModuleName(String module){
+		Random random = new Random();
+		List<Question> questionListForModule = new ArrayList<Question>();
+		questionListForModule = questionRepository.findByModule(module);
+		
+		HashMap<Integer, Question> selectedQuestionsForModule = new HashMap<>();
+		List<Question> selectedQuestionsToBeReturned = new ArrayList<Question>();
+		
+		int questionCounter = 0;
+		int questionMaxCounter = questionListForModule.size();
+		if(questionListForModule.size() > 2) {
+			while(questionCounter != 2 ) {
+				int randomGen = random.nextInt(questionMaxCounter);
+				if(!selectedQuestionsForModule.containsKey(randomGen)){
+					selectedQuestionsForModule.put(randomGen, questionListForModule.get(randomGen));
+					questionCounter++;
+				}
+			}
+		}
+		selectedQuestionsForModule.forEach((Integer, Question) ->{
+			selectedQuestionsToBeReturned.add(Question);
+		});
+		return selectedQuestionsToBeReturned;
+		
 	}
 }

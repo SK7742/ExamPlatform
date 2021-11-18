@@ -1,6 +1,7 @@
 package utility;
 
-public enum QuestionModules {
+public enum QuestionModules{
 	APTITUDE,
 	module2
 }
+
