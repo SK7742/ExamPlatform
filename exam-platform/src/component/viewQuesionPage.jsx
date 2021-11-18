@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import QuestionService from '../service/QuestionService';
-import AddOrEditQuestion from './AddOrEditQuestion';
+import AddOrEditQuestion from './AddQuestion';
 
 class viewQuesionPage extends Component {
     constructor(props){
@@ -28,7 +28,6 @@ class viewQuesionPage extends Component {
         this.props.history.push(`/addQuestion/${id}`);
     }
     render() {
-        
         return (
             <div>
                 <p></p>
@@ -45,6 +44,8 @@ class viewQuesionPage extends Component {
                             <th>Option B</th>
                             <th>Option C</th>
                             <th>Option D</th>
+                            <th>Module</th>
+                            <th>QuestionFlag</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -60,6 +61,7 @@ class viewQuesionPage extends Component {
                                     <td> { question.optionC}</td>
                                     <td> { question.optionD}</td>
                                     <td> { question.module}</td>
+                                    <td> { question.isQuestionActive}</td>
                                     <td>
                                         <button onClick = {() => this.editQuestion(question.questionId)} className="btn btn-primary">Update</button>
                                         <button onClick = {() => this.deleteQuestion(question.id)} style={{marginLeft: "10px"}} className="btn btn-danger">Delete</button>
