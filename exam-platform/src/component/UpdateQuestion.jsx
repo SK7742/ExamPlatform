@@ -47,7 +47,7 @@ class editQuestion extends Component {
             console.log('QuestionData => ' + JSON.stringify(question));
             QuestionService.updateQuestion(question,this.state.questionId).then( re =>{
             alert("Question Updated!!!");
-            this.props.history.push('../');
+            this.props.history.push('../showAllQuestion');
         })
         }else{
             alert("Please all the required Details!")

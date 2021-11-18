@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import QuestionService from '../service/QuestionService';
-import AddOrEditQuestion from './AddQuestion';
 
 class viewQuesionPage extends Component {
     constructor(props){
@@ -21,11 +20,18 @@ class viewQuesionPage extends Component {
         this.props.history.push('/addQuestion');
     }
     editQuestion(id){
-        <AddOrEditQuestion isCalledForUpdate = {true}/>
         this.props.history.push(`./updateQuestion/${id}`);
     }
+    /*deleteEmployee(id){
+        EmployeeService.deleteEmployee(id).then( res =>{
+            this.setState({employees: this.state.employees.filter(employee => employee.id !== id)})
+        });
+    }*/
     deleteQuestion(id){
-        this.props.history.push(`/addQuestion/${id}`);
+        QuestionService.deleteQuestion(id);
+        alert("Question Deleted!");
+        /*this.props.history.push('./showAllQuestion/');*/
+        window.location.reload(false);
     }
     render() {
         return (
@@ -64,7 +70,7 @@ class viewQuesionPage extends Component {
                                     <td> { question.isQuestionActive}</td>
                                     <td>
                                         <button onClick = {() => this.editQuestion(question.questionId)} className="btn btn-primary">Update</button>
-                                        <button onClick = {() => this.deleteQuestion(question.id)} style={{marginLeft: "10px"}} className="btn btn-danger">Delete</button>
+                                        <button onClick = {() => this.deleteQuestion(question.questionId)} style={{marginLeft: "10px"}} className="btn btn-danger">Delete</button>
                                     </td>
                                 </tr> 
                             )

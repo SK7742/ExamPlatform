@@ -1,7 +1,9 @@
 package com.example.application.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -87,6 +90,15 @@ public class QuestionController {
 	@GetMapping("/getAllQuestions")
 	public List<Question> getAllQuestionList(){
 		return questionRepository.findAll();
+	}
+	
+	@DeleteMapping("/deleteQuestion/{id}")
+	public ResponseEntity<Map<String, Boolean>> deleteQuestion(@PathVariable Long id){
+		Question question = questionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Question Not Exist!"));
+		questionRepository.delete(question);
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("deleted", Boolean.TRUE);
+		return ResponseEntity.ok(response);
 	}
 	
 }

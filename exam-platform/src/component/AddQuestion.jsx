@@ -33,7 +33,8 @@ class AddOrEditQuestion extends Component {
             console.log('QuestionData => ' + JSON.stringify(Question));
             QuestionService.addNewQuestion(Question).then( re =>{
             alert("Question Added!!!");
-            this.props.history.push('../');
+            /*this.props.history.push('./showAllQuestion');*/
+            window.location.reload(false);
         })
         }else{
             alert("Please all the required Details!")
