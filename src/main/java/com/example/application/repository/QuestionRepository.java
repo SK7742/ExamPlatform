@@ -15,5 +15,5 @@ import com.example.application.model.Question;
 @EnableJpaRepositories
 public interface QuestionRepository extends JpaRepository<Question, Long>{
 	List<Question> findByQuestion(String question);
-	List<Question> findByModule(String module);
+	List<Question> findByModuleAndIsQuestionActive(String module, char isQuestionActive);
 }

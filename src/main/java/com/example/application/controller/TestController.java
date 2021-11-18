@@ -20,11 +20,13 @@ import com.example.application.model.TestResponse;
 import com.example.application.repository.CandidateRepository;
 import com.example.application.repository.QuestionRepository;
 
+import constants.QuestionConstants;
 import utility.QuestionModules;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/examPlatform/user/test/")
 public class TestController {
+	
 	@Autowired
 	QuestionRepository questionRepository;
 	
@@ -34,6 +36,7 @@ public class TestController {
 	@Autowired
 	QuestionController questionController;
 	
+	List<Question> selectedQuestions = new ArrayList<Question>();
 	
 	@GetMapping("start/module/aptitude")
 	public List<Question> getQuestionsForAptitudeModule(){
@@ -55,25 +58,28 @@ public class TestController {
 		selectedQuestionsForAptitudeModule.forEach((Integer, Question) ->{
 			selectedQuestionsToBeReturned.add(Question);
 		});*/
-		List<Question> selectedQuestionsForAptitudeModule = null;
-		selectedQuestionsForAptitudeModule = getQuestionsForModuleByModuleName(QuestionModules.APTITUDE.toString());
-		if(selectedQuestionsForAptitudeModule != null) {
-			return selectedQuestionsForAptitudeModule;
-		}
-		return null;
+		this.selectedQuestions.addAll(getQuestionsForModuleByModuleName(QuestionModules.APTITUDE.toString()));
+		this.selectedQuestions.addAll(getQuestionsForModuleByModuleName(QuestionModules.ENGLISH.toString()));
+		return selectedQuestions;
 	}
 	public List<Question> getQuestionsForModuleByModuleName(String module){
 		Random random = new Random();
 		List<Question> questionListForModule = new ArrayList<Question>();
-		questionListForModule = questionRepository.findByModule(module);
+		questionListForModule = questionRepository.findByModuleAndIsQuestionActive(module, QuestionConstants.IS_QUESTION_ACTIVE_FLAG_Y);
 		
 		HashMap<Integer, Question> selectedQuestionsForModule = new HashMap<>();
 		List<Question> selectedQuestionsToBeReturned = new ArrayList<Question>();
 		
 		int questionCounter = 0;
 		int questionMaxCounter = questionListForModule.size();
-		if(questionListForModule.size() > 2) {
-			while(questionCounter != 2 ) {
+		int noOfQuestionToBeAddForThisModule = 0;
+		if(module.equalsIgnoreCase(QuestionModules.APTITUDE.toString())) {
+			noOfQuestionToBeAddForThisModule = QuestionConstants.APTITUDE_QUESTION_COUNT;
+		}else if(module.equalsIgnoreCase(QuestionModules.ENGLISH.toString())) {
+			noOfQuestionToBeAddForThisModule = QuestionConstants.ENGLISH_QUESTION_COUNT;
+		}
+		if(questionListForModule.size() >= noOfQuestionToBeAddForThisModule) {
+			while(questionCounter != noOfQuestionToBeAddForThisModule ) {
 				int randomGen = random.nextInt(questionMaxCounter);
 				if(!selectedQuestionsForModule.containsKey(randomGen)){
 					selectedQuestionsForModule.put(randomGen, questionListForModule.get(randomGen));

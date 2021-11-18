@@ -2,6 +2,7 @@ package utility;
 
 public enum QuestionModules{
 	APTITUDE,
-	module2
+	ENGLISH,
+	JAVA
 }
 

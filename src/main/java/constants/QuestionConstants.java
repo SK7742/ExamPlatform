@@ -1,7 +1,7 @@
 package constants;
 
 public interface QuestionConstants {
-	public static final String QUERY_MIN_COUNT_QUESTION_MODULE = "SELECT MIN(questionId) FROM QUESTION WHERE MODULE = 'APTITUDE'";
-	public static final String QUERY_MAX_COUNT_QUESTION_MODULE = "SELECT MAX(questionId) FROM QUESTION WHERE MODULE = 'APTITUDE'";
-	public static final String QUERY_GET_QUESTION_BY_ID = "SELECT * FROM QUESTIONS WHERE QUESTION_ID = ?1";
+	public static char IS_QUESTION_ACTIVE_FLAG_Y = 'Y';
+	public static int APTITUDE_QUESTION_COUNT = 3;
+	public static int ENGLISH_QUESTION_COUNT = 2;
 }
