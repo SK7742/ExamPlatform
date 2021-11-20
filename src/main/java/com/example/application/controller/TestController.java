@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +23,7 @@ import com.example.application.repository.CandidateRepository;
 import com.example.application.repository.QuestionRepository;
 
 import constants.QuestionConstants;
+import utility.BuildResponseXmlForTest;
 import utility.QuestionModules;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -37,6 +40,8 @@ public class TestController {
 	QuestionController questionController;
 	
 	List<Question> selectedQuestions = new ArrayList<Question>();
+	
+	BuildResponseXmlForTest buildResponseXmlForTest = new BuildResponseXmlForTest();
 	
 	@GetMapping("start/module/aptitude")
 	public List<Question> getQuestionsForAptitudeModule(){
@@ -91,6 +96,13 @@ public class TestController {
 			selectedQuestionsToBeReturned.add(Question);
 		});
 		return selectedQuestionsToBeReturned;
-		
+	}
+	
+	@PostMapping("/getXml")
+	public List<TestResponse> saveUserResponse(@RequestBody TestResponse response){
+		List<TestResponse> res = new ArrayList<TestResponse>();
+		res.add(response);
+		buildResponseXmlForTest.createXmlResponseFile(res, "Shivam");
+		return null;
 	}
 }
