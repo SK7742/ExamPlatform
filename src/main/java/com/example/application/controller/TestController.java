@@ -8,6 +8,9 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +32,6 @@ import utility.QuestionModules;
 @RestController
 @RequestMapping("/examPlatform/user/test/")
 public class TestController {
-	
 	@Autowired
 	QuestionRepository questionRepository;
 	
@@ -39,12 +41,13 @@ public class TestController {
 	@Autowired
 	QuestionController questionController;
 	
+	public static String userName = "sk";
 	List<Question> selectedQuestions = new ArrayList<Question>();
-	
+	List<TestResponse> userResponse = new ArrayList<TestResponse>();
 	BuildResponseXmlForTest buildResponseXmlForTest = new BuildResponseXmlForTest();
 	
-	@GetMapping("start/module/aptitude")
-	public List<Question> getQuestionsForAptitudeModule(){
+	@GetMapping("start/modules")
+	public List<Question> getQuestionsForModules(){
 		/*Random random = new Random();
 		List<Question> questionListAptitudeModule = new ArrayList<Question>();
 		questionListAptitudeModule = questionRepository.findByModule(QuestionModules.APTITUDE.toString());
@@ -99,10 +102,22 @@ public class TestController {
 	}
 	
 	@PostMapping("/getXml")
-	public List<TestResponse> saveUserResponse(@RequestBody TestResponse response){
-		List<TestResponse> res = new ArrayList<TestResponse>();
-		res.add(response);
-		buildResponseXmlForTest.createXmlResponseFile(res, "Shivam");
-		return null;
+	public ResponseEntity<String> saveUserResponse(@RequestBody TestResponse response){
+		HttpHeaders responseHeaders = new HttpHeaders();
+		userResponse.add(response);
+		//buildResponseXmlForTest.createXmlResponseFile(res, "Shivam");
+		saveUserTestResponse();
+		responseHeaders.set("Request Status:", "Response Saved");
+		return new ResponseEntity<String>("Response Saved!", responseHeaders, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/FinalSubmit")
+	public ResponseEntity<String> saveUserTestResponse(){
+		Candidate candidate = null;
+		candidate = candidateRepository.findByCandidateUserName(userName);
+		HttpHeaders responseHeader = new HttpHeaders();
+		buildResponseXmlForTest.createXmlResponseFile(userResponse, candidate);
+		responseHeader.set("Request Status:", "Test Response Saved");
+		return new ResponseEntity<String>("Test Response Saved!", responseHeader, HttpStatus.ACCEPTED);
 	}
 }

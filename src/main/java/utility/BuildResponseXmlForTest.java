@@ -15,36 +15,57 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.example.application.model.Candidate;
 import com.example.application.model.Question;
 import com.example.application.model.TestResponse;
+import com.example.application.repository.CandidateRepository;
 
 public class BuildResponseXmlForTest {
-	public String fileNameWithFilePath = "D:\\Project\\LearingSpringUsingSTS\\ExamPlatform\\TestResponses\\xmlFile\\";
 	
-	public boolean createXmlResponseFile(List<TestResponse> response, String userName) {
+  
+	public boolean createXmlResponseFile(List<TestResponse> response, Candidate candidate) {
 		try {
+			String fileNameWithFilePath = "D:\\Project\\LearingSpringUsingSTS\\ExamPlatform\\TestResponses\\xmlFile\\";
 			Date date = new Date();
 			String dateAsString = date.toString();
-			fileNameWithFilePath = fileNameWithFilePath + userName + ".xml";
+			fileNameWithFilePath = fileNameWithFilePath + "TestResponseFileForUser_";
+			fileNameWithFilePath = fileNameWithFilePath + candidate.getCandidateUserName()+ ".xml";
 			DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = builderFactory.newDocumentBuilder();
 			Document document = builder.newDocument();
 			
 			//Root Element
-			Element root = document.createElement(userName + "TestResponse");
+			Element root = document.createElement("TestResponse");
 			document.appendChild(root);
 			
 			//TimeStamp Node
-			Element testDetails = document.createElement("TestDeatils");
-			root.appendChild(testDetails);
+			Element userDetails = document.createElement("userDeatils");
+			root.appendChild(userDetails);
 			
 			Element testDate = document.createElement("TestDate");
 			testDate.appendChild(document.createTextNode(dateAsString));
-			testDetails.appendChild(testDate);	
+			userDetails.appendChild(testDate);	
+			
+			Element userIdNode = document.createElement("userId");
+			userIdNode.appendChild(document.createTextNode(candidate.getCandidateId().toString()));
+			userDetails.appendChild(userIdNode);
+			
+			Element userNameNode = document.createElement("userName");
+			userNameNode.appendChild(document.createTextNode(candidate.getCandidateUserName()));
+			userDetails.appendChild(userNameNode);
+			
+			Element fullNameNode = document.createElement("FullName");
+			fullNameNode.appendChild(document.createTextNode(candidate.getCandidateFirstName() + " " + candidate.getCandidateLastName()));
+			userDetails.appendChild(fullNameNode);
+			
+			Element emailIdNode = document.createElement("email");
+			emailIdNode.appendChild(document.createTextNode(candidate.getEmailId()));
+			userDetails.appendChild(emailIdNode);
 			
 			
 			response.forEach((TestResponse) ->{
