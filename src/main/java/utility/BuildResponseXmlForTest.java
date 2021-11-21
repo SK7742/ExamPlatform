@@ -26,8 +26,6 @@ import com.example.application.model.TestResponse;
 import com.example.application.repository.CandidateRepository;
 
 public class BuildResponseXmlForTest {
-	
-  
 	public boolean createXmlResponseFile(List<TestResponse> response, Candidate candidate) {
 		try {
 			String fileNameWithFilePath = "D:\\Project\\LearingSpringUsingSTS\\ExamPlatform\\TestResponses\\xmlFile\\";

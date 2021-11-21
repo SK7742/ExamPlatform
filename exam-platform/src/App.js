@@ -7,11 +7,13 @@ import LoginComponent from './component/LoginComponent';
 import AddQuestion from './component/AddQuestion';
 import UpdateQuestion from './component/UpdateQuestion';
 import viewQuesionPage from './component/viewQuesionPage';
+import FooterComponent from './component/FooterComponent';
 function App() {
   return (
     <div>
       <Router>
         <HeaderComponent />
+        
         <div className = "container">
           <switch> 
           <Route path = "/candidateRegister" component = {RegisterNewCandidateComponent}></Route>
@@ -22,8 +24,8 @@ function App() {
           </switch>
         </div>
       </Router>
-    </div>
-  );
+      <FooterComponent />
+    </div>  );
 }
 
 export default App;
