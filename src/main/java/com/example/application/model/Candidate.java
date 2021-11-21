@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,13 +17,13 @@ import javax.persistence.Table;
 public class Candidate {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "candidate_id")
+	@JoinColumn(name = "candidate_id")
 	private Long candidateId;
 	
 	@Column(name = "candidate_first_name")
 	private String candidateFirstName;
 	
-	@Column(name = "candidate_last_name")
+	
 	private String candidateLastName;
 	
 	@Column(name = "email_id")
