@@ -42,7 +42,7 @@ public class TestController {
 	QuestionController questionController;
 	
 	public static String userName = "sk";
-	List<Question> selectedQuestions = new ArrayList<Question>();
+	
 	List<TestResponse> userResponse = new ArrayList<TestResponse>();
 	BuildResponseXmlForTest buildResponseXmlForTest = new BuildResponseXmlForTest();
 	
@@ -66,8 +66,9 @@ public class TestController {
 		selectedQuestionsForAptitudeModule.forEach((Integer, Question) ->{
 			selectedQuestionsToBeReturned.add(Question);
 		});*/
-		this.selectedQuestions.addAll(getQuestionsForModuleByModuleName(QuestionModules.APTITUDE.toString()));
-		this.selectedQuestions.addAll(getQuestionsForModuleByModuleName(QuestionModules.ENGLISH.toString()));
+		List<Question> selectedQuestions = new ArrayList<>();
+		selectedQuestions.addAll(getQuestionsForModuleByModuleName(QuestionModules.APTITUDE.toString()));
+		selectedQuestions.addAll(getQuestionsForModuleByModuleName(QuestionModules.ENGLISH.toString()));
 		return selectedQuestions;
 	}
 	public List<Question> getQuestionsForModuleByModuleName(String module){
